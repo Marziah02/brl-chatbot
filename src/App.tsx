@@ -6,6 +6,7 @@ import ChatMessage from "./components/ChatMessage";
 import { companyInfo } from "./companyInfo";
 import { predefinedQA } from "./predefinedQA";
 import Fuse from "fuse.js";
+import { BsChatRight } from "react-icons/bs";
 
 const App: React.FC = () => {
   const chatBodyRef = useRef();
@@ -199,7 +200,10 @@ const App: React.FC = () => {
         onClick={() => setShowChatbot((prev) => !prev)}
         id="chatbot-toggler"
       >
-        <span className="material-symbols-rounded">mode_comment</span>
+        <span className="material-symbols-rounded">
+          {" "}
+          <BsChatRight className="chat-icon" />
+        </span>
         <span className="material-symbols-rounded">close</span>
       </button>
       <div className="chatbot-popup">
