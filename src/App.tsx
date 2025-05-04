@@ -78,7 +78,10 @@ const App: React.FC = () => {
     const userMessage = normalizeUserMessage(history[history.length - 1].text);
     const result = fuse.search(userMessage);
     //const userMessage = history[history.length - 1].text;
-
+    setChatHistory((prev) => [
+      ...prev.filter((msg) => msg.text !== "Thinking..."), // Remove any previous thinking message
+      { role: "model", text: "..." },
+    ]);
     // Step 1: Check similarity with predefined questions
     let bestMatch = null;
     let highestSimilarity = 0;
@@ -102,7 +105,7 @@ const App: React.FC = () => {
       // console.log("Match score:", result[0]?.score);
 
       setChatHistory((prev) => [
-        ...prev.filter((msg) => msg.text !== "Thinking..."),
+        ...prev.filter((msg) => msg.text !== "..."),
         { role: "model", text: bestMatch.answer },
       ]);
       return;
@@ -133,7 +136,7 @@ const App: React.FC = () => {
     if (highestSimilarity >= 0.3 && bestMatch) {
       // console.log("Matched predefined QA:", bestMatch);
       setChatHistory((prev) => [
-        ...prev.filter((msg) => msg.text !== "Thinking..."),
+        ...prev.filter((msg) => msg.text !== "..."),
         { role: "model", text: bestMatch.answer },
       ]);
       return;
@@ -144,7 +147,7 @@ const App: React.FC = () => {
 
     const updateHistory = (text, isError = false) => {
       setChatHistory((prev) => [
-        ...prev.filter((msg) => msg.text !== "Thinking..."),
+        ...prev.filter((msg) => msg.text !== "..."),
         { role: "model", text, isError },
       ]);
     };
@@ -177,7 +180,7 @@ const App: React.FC = () => {
       updateHistory(apiResponseText);
     } catch (error) {
       updateHistory(
-        "Sorry, I couldn't find an answer to your question. Please try rephrasing or visit our website: https://skillshoper.com",
+        "Sorry, I couldn't find an answer to your question. Please try rephrasing or visit our website: https://brlbd.com or call us at +8801707081370.",
         true
       );
     }
@@ -218,7 +221,7 @@ const App: React.FC = () => {
           <div className="message bot-message">
             <ChatbotIcon />
             <p className="message-text">
-              Welcome to SkillShoper. <br /> How can I help you?
+              Welcome to Babylon Resources Ltd. <br /> How can I help you?
             </p>
           </div>
           {/* Render the chat history dynamically */}
